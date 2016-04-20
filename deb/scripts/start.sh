@@ -1,3 +1,3 @@
 #!/bin/bash
-/data/mount_ram.sh
+/scripts/mount_ram.sh
 exec supervisord -n
