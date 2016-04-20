@@ -2,8 +2,8 @@
 apt-get install rsync -qy
 rsync -avz -q /mnt/cache/ /var/www/
 echo " Ramdisk Sync"
-if [[ -d /mnt/fpc_cluster ]]; then
-  if [[ -d /mnt/ssd ]]; then
+if [[ -d "/mnt/fpc_cluster" ]]; then
+  if [[ -d "/mnt/fpc" ]]; then
     rsync -avz -q --delete /mnt/fpc_cluster/ /mnt/fpc/
     echo "FPC Sync"
   fi
