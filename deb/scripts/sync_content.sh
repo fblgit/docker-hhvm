@@ -33,29 +33,28 @@ function all_sync {
   minor_sync
 }
 ############
-if [[ "$1" == "NOW_ONCE" ]]; then
-  purge_sync
-  all_sync
-  exit
-fi
 if [[ "$1" == "NOW_DAEMON" ]]; then
   all_sync
 fi
 CYCLE=0
-
-while sleep 0; do
-  RN=$((( RANDOM % 180 )))
-  # Ensure in large scale its not concurrent...
-  sleep $RN
-  if [[ "$SYNC_ENABLED" == "1" ]]; then
-    if [[ "$CYCLE" == "$REPEAT_CYCLE" ]]; then
-      # Major Sync
-      major_sync
-      CYCLE=0
-    fi
+if [[ "$1" == "NOW_ONCE" ]]; then
+  purge_sync
+  all_sync
+else
+  while sleep 0; do
+    RN=$((( RANDOM % 180 )))
+    # Ensure in large scale its not concurrent...
     sleep $RN
-    minor_sync
-  fi
-  CYCLE=$(($CYCLE+1))
-  sleep $WAIT_CYCLE
-done
+    if [[ "$SYNC_ENABLED" == "1" ]]; then
+      if [[ "$CYCLE" == "$REPEAT_CYCLE" ]]; then
+        # Major Sync
+        major_sync
+        CYCLE=0
+      fi
+      sleep $RN
+      minor_sync
+    fi
+    CYCLE=$(($CYCLE+1))
+    sleep $WAIT_CYCLE
+  done
+fi
