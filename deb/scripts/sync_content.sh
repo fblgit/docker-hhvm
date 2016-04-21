@@ -38,18 +38,18 @@ CYCLE=0
 RANDOM=$(((RANDOM%120)))
 
 while sleep 0; do
-RANDOM=$(((RANDOM%180)))
-# Ensure in large scale its not concurrent... 
-sleep $RANDOM
-if [[ "$SYNC_ENABLED" == "1" ]]; then
-  if [[ "$CYCLE" == "$REPEAT_CYCLE" ]]; then
-    # Major Sync
-    major_sync
-    CYCLE=0
-  fi
+  RANDOM=$(((RANDOM%180)))
+  # Ensure in large scale its not concurrent... 
   sleep $RANDOM
-  minor_sync
-fi
-CYCLE=$(($CYCLE+1))
-sleep $WAIT_CYCLE
-fi
+  if [[ "$SYNC_ENABLED" == "1" ]]; then
+    if [[ "$CYCLE" == "$REPEAT_CYCLE" ]]; then
+      # Major Sync
+      major_sync
+      CYCLE=0
+    fi
+    sleep $RANDOM
+    minor_sync
+  fi
+  CYCLE=$(($CYCLE+1))
+  sleep $WAIT_CYCLE
+done
