@@ -35,19 +35,18 @@ if [[ "$1" == "NOW_DAEMON" ]]; then
   all_sync
 fi
 CYCLE=0
-RANDOM=$(((RANDOM%120)))
 
 while sleep 0; do
-  RANDOM=$(((RANDOM%180)))
-  # Ensure in large scale its not concurrent... 
-  sleep $RANDOM
+  RN=$((( RANDOM % 180 )))
+  # Ensure in large scale its not concurrent...
+  sleep $RN
   if [[ "$SYNC_ENABLED" == "1" ]]; then
     if [[ "$CYCLE" == "$REPEAT_CYCLE" ]]; then
       # Major Sync
       major_sync
       CYCLE=0
     fi
-    sleep $RANDOM
+    sleep $RN
     minor_sync
   fi
   CYCLE=$(($CYCLE+1))

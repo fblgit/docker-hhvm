@@ -1,6 +1,5 @@
 # brunoric/docker-hhvm:deb
 FROM ubuntu:trusty
-MAINTAINER brunoric <brunoric@gmail.com>
 
 ARG HHVM_VERSION=hhvm
 
