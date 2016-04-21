@@ -2,7 +2,7 @@
 ENABLED_RAMDISK=${ENABLED_RAMDISK:-1}
 
 if [[ "$ENABLED_RAMDISK" == "1" ]]; then
-  rsync -avz -q /mnt/cache/ /var/www/
+  rsync -avz -q --delete /mnt/cache/ /var/www/
   echo " Ramdisk Sync"
   if [[ -d "/mnt/fpc_cluster" ]]; then
     if [[ -d "/mnt/fpc" ]]; then
