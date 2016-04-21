@@ -22,6 +22,11 @@ function minor_sync {
   rsync -avz -q --delete /mnt/fpc_cluster/ /mnt/fpc/
   echo "`date` $HOSTNAME >> LIGHT SYNC [OK]">>$LOG_FILE
 }
+# Initial Sync Purge
+function purge_sync {
+  rsync -avz -q --delete /mnt/fpc_cluster/ /mnt/fpc/
+  echo "`date` $HOSTNAME >> PURGE SYNC [OK]">>$LOG_FILE
+}
 # On All Sync
 function all_sync {
   major_sync
@@ -29,7 +34,8 @@ function all_sync {
 }
 ############
 if [[ "$1" == "NOW_ONCE" ]]; then
-  all_sync && exit 0
+  purge_sync
+  all_sync
 fi
 if [[ "$1" == "NOW_DAEMON" ]]; then
   all_sync
