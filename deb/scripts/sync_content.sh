@@ -36,6 +36,7 @@ function all_sync {
 if [[ "$1" == "NOW_ONCE" ]]; then
   purge_sync
   all_sync
+  exit
 fi
 if [[ "$1" == "NOW_DAEMON" ]]; then
   all_sync
