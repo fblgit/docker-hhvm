@@ -3,11 +3,12 @@
 ## Creates a non concurrent large scale event model
 ## I suppose you dont want to run this at the same time in 500 containers.
 SYNC_ENABLED=${SYNC_ENABLED:-1}
+ONLY_MAJOR=${ONLY_MAJOR:-0}
 ## If Sync is Disabled then it will only sleep
 # Major Sync Invoke every...
-REPEAT_CYCLE=18
+REPEAT_CYCLE=${REPEAT_CYCLE:-18}
 # Wait per each Cycle
-WAIT_CYCLE=1800
+WAIT_CYCLE=${WAIT_CYCLE:-1800}
 # LOG
 LOG_FILE=/mnt/logs/content_sync.log
 
@@ -35,6 +36,10 @@ function all_sync {
 ############
 if [[ "$1" == "NOW_DAEMON" ]]; then
   all_sync
+fi
+if [[ "$ONLY_MAJOR" == "1" ]] ; then
+  major_sync
+  SYNC_ENABLED=0
 fi
 CYCLE=0
 if [[ "$1" == "NOW_ONCE" ]]; then
